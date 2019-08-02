@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Automation report</title>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<style>
+	      * {
+	       box-sizing: border-box;
+	      }
+
+	      body {
+	       font-family: Arial, Helvetica, sans-serif;
+	       font-size: 14px;
+	      }
+
+	      /* Style the header */
+	      header {
+	       background-color: #836590;
+	       padding: 0.5px;
+	       text-align: center;
+	       font-size: 22px;
+	       color: white;
+	      }
+
+	      /* Create two columns/boxes that floats next to each other */
+	      nav {
+	       float: left;
+	       width: 20%;
+	       height: auto;
+	       background: white;
+	       padding: 20px;
+	       border-right: 2px solid black;
+	       overflow: hidden;
+	      }
+
+	      /* Style the list inside the menu */
+	      nav ul {
+	       list-style-type: none;
+	       padding: 0;
+	      }
+
+	      article {
+	       float: left;
+	       padding: 20px;
+	       width: 80%;
+	       background-color: white;
+	       border-left: 1px solid black;
+	       height: auto;
+	       overflow: hidden;
+	      }
+
+	      /* Clear floats after the columns */
+	      section:after {
+	       content: "";
+	       display: table;
+	       clear: both;
+	      }
+	      #fontSizeWrapper { font-size: 16px; }
+
+	      #fontSize {
+	       width: 100px;
+	       font-size: 1em;
+	       }
+
+	      /* ————————————————————–
+	       Tree core styles
+	      */
+	      .tree { margin: 1em; }
+
+	      .tree input {
+	       position: absolute;
+	       clip: rect(0, 0, 0, 0);
+	       }
+
+	      .tree input ~ ul { display: none; }
+
+	      .tree input:checked ~ ul { display: block; }
+
+	      /* ————————————————————–
+	       Tree rows
+	      */
+	      .tree li {
+	       line-height: 1.2;
+	       position: relative;
+	       padding: 0 0 1em 1em;
+	       }
+
+	      .tree ul li { padding: 1em 0 0 1em; }
+
+	      .tree > li:last-child { padding-bottom: 0; }
+
+	      /* ————————————————————–
+	       Tree labels
+	      */
+	      .tree_label {
+	       position: relative;
+	       display: inline-block;
+	       background: #fff;
+	       }
+
+	      label.tree_label { cursor: pointer; }
+
+	      label.tree_label:hover { color: #666; }
+
+	      /* ————————————————————–
+	       Tree expanded icon
+	      */
+	      label.tree_label:before {
+	       background: #000;
+	       color: #fff;
+	       position: relative;
+	       z-index: 1;
+	       float: left;
+	       margin: 0 1em 0 -2em;
+	       width: 1em;
+	       height: 1em;
+	       border-radius: 1em;
+	       content: '+';
+	       text-align: center;
+	       line-height: .9em;
+	       }
+
+	      :checked ~ label.tree_label:before { content: '–'; }
+
+	      /* ————————————————————–
+	       Tree branches
+	      */
+	      .tree li:before {
+	       position: absolute;
+	       top: 0;
+	       bottom: 0;
+	       left: -.5em;
+	       display: block;
+	       width: 0;
+	       border-left: 1px solid #777;
+	       content: "";
+	       }
+
+	      .tree_label:after {
+	       position: absolute;
+	       top: 0;
+	       left: -1.5em;
+	       display: block;
+	       height: 0.5em;
+	       width: 1em;
+	       border-bottom: 1px solid #777;
+	       border-left: 1px solid #777;
+	       border-radius: 0 0 0 .3em;
+	       content: '';
+	       }
+
+	      label.tree_label:after { border-bottom: 0; }
+
+	      :checked ~ label.tree_label:after {
+	       border-radius: 0 .3em 0 0;
+	       border-top: 1px solid #777;
+	       border-right: 1px solid #777;
+	       border-bottom: 0;
+	       border-left: 0;
+	       bottom: 0;
+	       top: 0.5em;
+	       height: auto;
+	       }
+
+	      .tree li:last-child:before {
+	       height: 1em;
+	       bottom: auto;
+	       }
+
+	      .tree > li:last-child:before { display: none; }
+
+	      .tree_custom {
+	       display: block;
+	       background: #eee;
+	       padding: 1em;
+	       border-radius: 0.3em;
+	      }
+	      /* Style the footer */
+	      footer {
+	       bottom: 0;
+	       left: 0;
+	       height: 30px;
+	       background-color: #671E75;
+	       width: 100%;
+	       padding: 1.5px;
+	       overflow: hidden;
+	       position: fixed;
+	       width: 100%;
+	       color: white;
+	      }
+	      .left{
+	         float: left;
+	      }
+	      #teststeps table {
+	         width: 100%;
+	         overflow: auto;
+	      }
+	      #teststeps th {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	      }
+	      td.sno {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         width: 30px;
+	         background-color: White;
+	      }
+	      td.fail {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: Red;
+	      }
+	      td.pass {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: GREEN;
+	      }
+	      td.warning {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: ORANGE;
+	      }
+	      td.done {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: #BDCFFF;
+	      }
+	      td.unknown {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: #727272;
+	      }
+	      td.default {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: White;
+	         overflow: auto;
+	         max-width: 275px;
+	      }
+	      td.teststeptitle{
+	         border: 1px solid #ddd;
+	         padding: 3px 3px 3px 3px;
+	         background-color: #69e;
+	         overflow: auto;
+	         font-size: 16px;
+	         font-weight: bold;
+	         color: white;
+	      }
+	      #teststeps tr:hover {
+	         background-color: Grey;
+	      }
+	      #teststeps th {
+	         padding-top: 12px;
+	         padding-bottom: 12px;
+	         text-align: center;
+	         background: #4CAF50;
+	         color: white;
+	      }
+	      .searchForm {
+	         border-radius: 5px;
+	         overflow: auto;
+	         width:50%;
+	         
+	      }
+	      input[type=text], select {
+	         width: auto;
+	         padding: 2px;
+	         margin: 8px 0;
+	         display: inline-block;
+	         border: 1px solid #ccc;
+	         border-radius: 4px;
+	         box-sizing: border-box;
+	      }
+	      span.pass {
+	        background: green;
+	         border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: white;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      span.fail {
+	        background: red;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: white;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      span.warning {
+	        background: orange;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: black;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      span.done {
+	        background: #67B8FF;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: black;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      span.info {
+	        background: #C7E3FB;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: black;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+	      span.unknown {
+	        background: #D7D7D7;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: black;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+	      @media (max-width: 600px) {
+	       nav, article {
+	         width: 100%;
+	         height: auto;
+	       }
+	      }
+	</style>
+</head>
+<body>
+	<header>
+		<img class='left' src='support-files/logo.png'>
+		<p>Test Summary report<br>
+		Nectar Automation</p>
+	</header>
+	<section>
+		<nav>
+			<h3>Overview</h3>
+		</nav>
+		<article></article>
+	</section>
+	<footer>
+		This is an autogenerated report.
+	</footer>
+	<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+	</script> 
+	<script>
+	      google.charts.load("current", {packages:["corechart"]});
+	      
+	      //consts
+	      var J_TCNAME = "tcName";
+	      var J_TCSHORTNAME = "tcShortName";
+	      var J_TCDESC = "tcDesc";
+	      var J_TCMODULE = "tcModule";
+	      var J_TCENV = "tcEnv";
+	      var J_TCSTATUS= "tcStatus";
+	      var J_TCSTARTTIME = "tcStarttime";
+	      var J_TCENDTIME = "tcEndtime";
+	      var J_TCTESTSTEPS = "tcTeststeps";
+	      var J_TCADDINFOS = "tcInformations";
+	      var J_TCADDINFO = "info";
+	      var J_TCADDINFOFILE = "info-file";
+	      var J_TCHOST = "host";
+
+	      var J_TSNAME = "tsName";
+	      var J_TSSTARTTIME = "tsStarttime";
+	      var J_TSENDTIME = "tsEndtime";
+	      var J_TSSTATUS= "tsStatus";
+	      var J_TSTESTCASES= "tsTestcases";
+	      
+	      var J_PASS= "pass";
+	      var J_FAIL= "fail";
+	      var J_WARNING= "warning";
+	      var J_DONE= "done";
+	      var J_UNKNOWN= "unkown";
+	      var J_TOTAL= "total";
+	      
+	      var J_ISTESTCASE= "isTestCase";
+	      var J_ISTESTSUITE= "isTestSuite";
+
+	      
+	      
+	      var tableID  = "teststeps"; 
+	      var data = '${TestSuiteJSON}';
+	      var jsonData = JSON.parse(data);
+	      
+	      
+	      
+	      
+
+	      document.getElementsByTagName('nav')[0].appendChild(getTreeView());
+
+	      document.getElementsByClassName("tree")[0].addEventListener("click", function(e) {
+	        setArticleDiv(e.target);
+	      });
+
+	      function getTreeView() {
+	         var treeViewHTML = "";
+	         var ulItem = document.createElement('UL');
+	         ulItem.setAttribute('class','tree');
+	         
+	         var suiteNumber = 0;
+	         var sName = "suite";
+	         treeViewHTML += openLI();
+	         treeViewHTML += getLIItemWithExpendCollapse(sName + suiteNumber);
+	         treeViewHTML += getLILabel(sName + suiteNumber, "Test Suites");
+	         treeViewHTML += openUL();
+	         var suites = jsonData.testSuites;
+	         
+	         for ( var i = 0 ; i < suites.length ; i++) {
+	             var suite = suites[i];
+	             var suiteName = suite.tsName;
+	             suiteNumber++;
+	             var forID = suiteName + suiteNumber;
+	             treeViewHTML += openLI();
+	             treeViewHTML += getLIItemWithExpendCollapse(forID);
+	             treeViewHTML += getLILabel(forID, suiteName,getTestSuiteAttributes(suite));
+	             treeViewHTML += openUL();
+
+	             var testCases = suite.tsTestcases;
+	             for ( var j = 0 ; j < testCases.length ; j++) {
+	                 var testCase = testCases[j];
+	                 treeViewHTML += getLIItem(getTestCaseAttributes(testCase,suiteName), testCase.tcName,testCase.tcStatus.toLowerCase());
+	             }
+	             treeViewHTML += closeUL();
+	             treeViewHTML += closeLI();
+	         }
+	         ulItem.innerHTML = treeViewHTML;
+	         return ulItem;
+	      }
+	      
+	      
+	      function getTestSuiteAttributes(testSuite){
+	          var attri = "";
+	          attri = J_TSNAME + " ='" + testSuite.tsName + "' ";
+	          attri += J_TSSTARTTIME + "='" + testSuite.tsStarttime + "' ";
+	          attri += J_TSENDTIME + "='" + testSuite.tsEndtime + "' ";
+	          attri += J_TSSTATUS + "='" + testSuite.tsStatus + "' ";
+	          attri += J_PASS + "='" + testSuite.pass + "' ";
+	          attri += J_FAIL + "='" + testSuite.fail + "' ";
+	          attri += J_WARNING + "='" + testSuite.warning + "' ";
+	          attri += J_DONE + "='" + testSuite.done + "' ";
+	          attri += J_UNKNOWN + "='" + testSuite.unknown + "' ";
+	          attri += J_TOTAL + "='" + testSuite.total + "' ";
+	          attri += J_ISTESTSUITE + "='" + true + "' ";
+	          attri += J_ISTESTCASE + "='" + false + "' ";
+	          return attri;
+	      }
+	      
+	      function getTestSuiteStatusDataTable(testSuite){
+	          var arrOfData = [testSuite.pass,testSuite.fail,testSuite.warning,testSuite.done,testSuite.unknown];
+	          return getStatusDataTableForChart(arrOfData);
+	      }
+	      
+	      function getTestCaseAttributes(testCase,suiteName){
+	          var attri = " ";
+	          attri = J_TSNAME + " ='" + suiteName + "' ";
+	          attri += J_TCNAME + "='" + testCase.tcName + "' ";
+	          attri += J_TCSHORTNAME + "='" + testCase.tcShortName + "' ";
+	          attri += J_TCMODULE + "='" + testCase.tcModule + "' ";
+	          attri += J_TCENV + "='" + testCase.tcEnv + "' ";
+	          attri += J_TCSTATUS + "='" + testCase.tcStatus + "' ";
+	          attri += J_TCSTARTTIME + "='" + testCase.tcStarttime + "' ";
+	          attri += J_TCENDTIME + "='" + testCase.tcEndtime + "' ";
+	          attri += J_TCHOST + "='" + testCase.host + "' ";
+	          attri += J_PASS + "='" + testCase.pass + "' ";
+	          attri += J_FAIL + "='" + testCase.fail + "' ";
+	          attri += J_WARNING + "='" + testCase.warning + "' ";
+	          attri += J_DONE + "='" + testCase.done + "' ";
+	          attri += J_UNKNOWN + "='" + testCase.unknown + "' ";
+	          attri += J_TOTAL + "='" + testCase.total + "' ";
+	          attri += J_ISTESTSUITE + "='" + false + "' ";
+	          attri += J_ISTESTCASE + "='" + true + "' ";
+	          return attri;
+	      }
+	      
+	      function getTestCaseStatusDataTable(testCase){
+	          var arrOfData = [testCase.pass,testCase.fail,testCase.warning,testCase.done,testCase.unknown];
+	          return getStatusDataTableForChart(arrOfData);
+	      }
+	      
+	      function setArticleDiv(ele){
+	         
+	         var isTestSuite = ele.getAttribute(J_ISTESTSUITE) == "true";
+	         var isTestCase = ele.getAttribute(J_ISTESTCASE) == "true";
+	         var isParent = !isTestSuite && !isTestCase;
+	         
+	         var filterSuite = ele.getAttribute(J_TSNAME);
+	         var filterTCName = ele.getAttribute(J_TCNAME);
+	         var suites = jsonData.testSuites;
+	         if(isParent){
+	               var innerHTMLTxt = document.getElementsByTagName('article')[0].innerHTML;
+	              var divO = getTestSuitesDivObject(suites);
+				  if(divO != null){
+				  try{
+					document.getElementsByTagName('article')[0].innerHTML = '';
+	               document.getElementsByTagName('article')[0].appendChild(divO);
+	               createTestSuiteGoogleCharts(suites);
+	               return;
+				   }catch(ex){
+					document.getElementsByTagName('article')[0].innerHTML = innerHTMLTxt;
+				   }
+				   }
+	         }
+	         if(filterSuite != null ){
+	             for ( var i = 0 ; i < suites.length ; i++) {
+	                 var suite = suites[i];
+	                 var suiteName = suite.tsName;
+	                 
+	                 if(filterSuite.toLowerCase() == suiteName.toLowerCase()){
+	                 
+	                     if(isTestCase){
+	                     var testCases = suite.tsTestcases;
+	                     for ( var j = 0 ; j < testCases.length ; j++) {
+	                         var testCase = testCases[j];
+	                         if(testCase.tcName.toLowerCase() == filterTCName.toLowerCase()){
+	                              document.getElementsByTagName('article')[0].innerHTML = '';
+	                             var divO = getTestCaseDivObject(testCase,suiteName);
+	                             document.getElementsByTagName('article')[0].appendChild(divO);
+	                             drawStatusGoogleChart(getTestCaseStatusDataTable(testCase),"Test step status",testCase.tcShortName);
+	                             return;
+	                         }
+	                     }
+	                     }else if(filterSuite){
+	                          document.getElementsByTagName('article')[0].innerHTML = '';
+	                          var divO = getTestSuiteDivObject(suite);
+	                           document.getElementsByTagName('article')[0].appendChild(divO);
+	                          drawStatusGoogleChart(getTestSuiteStatusDataTable(suite),"Test suite status",suiteName);
+	                          return;
+	                     }
+	                 }
+	                 
+	             }
+	         }
+	      }
+
+	      function getTestSuitesDivObject(suites){
+	           var divObj = document.createElement('DIV');
+	           
+	           for ( var i = 0 ; i < suites.length ; i++) {
+	                 var suite = suites[i];
+	                 divObj.appendChild(getTestSuiteDivObject(suite));
+	             }
+				 return divObj;
+	       }
+	       function createTestSuiteGoogleCharts(suites){
+	           for ( var i = 0 ; i < suites.length ; i++) {
+	                 var suite = suites[i];
+	                 drawStatusGoogleChart(getTestSuiteStatusDataTable(suite),"Test suite status",suite.tsName);
+	             }
+	       }
+	      
+	      
+	      function getTestSuiteDivObject(testSuite){
+	         var divObj = document.createElement('DIV');
+	         divObj.appendChild(createTestSuiteOverviewDiv(testSuite));
+	         return divObj;
+	      }
+
+	      function getTestCaseDivObject(testCase,suiteName){
+	         var divObj = document.createElement('DIV');
+	         divObj.appendChild(createTestCaseOverviewDiv(testCase));
+	         divObj.appendChild(createSearchForm());
+	         divObj.appendChild(getTestStepsHTMLTable(testCase.tcTeststeps,suiteName,testCase.tcShortName));
+	         return divObj;
+	      }
+
+	      function createSearchForm() {
+	         var searchDiv = document.createElement('DIV');
+	         
+	         searchDiv.setAttribute('class', 'searchForm');
+	         //Create array of options to be added
+	         var arrValue = ["Pass", "Fail", "Warning", "Done", "Info", "Unknown"];
+
+	         //Create and append select list
+	         var selectList = document.createElement("select");
+	         selectList.id = "statusList";
+	         selectList.setAttribute('onchange', "searchResults('statusList', 3, false, true)");
+	         
+	         
+
+	         var lbl = document.createElement('label');
+	         lbl.innerHTML = '<b>Filter by Status:&nbsp;&nbsp;<\/b>';
+	         searchDiv.appendChild(lbl);
+	         searchDiv.appendChild(selectList);
+
+	         var btnClear = document.createElement('BUTTON');
+	         btnClear.setAttribute('name','submit');
+	         btnClear.setAttribute('type','submit');
+	         btnClear.setAttribute('value','Clear');
+	         btnClear.appendChild(document.createTextNode('Show All'));
+	         btnClear.setAttribute('onclick',"displayAll('teststeps')");
+	         searchDiv.appendChild(btnClear);
+
+	         //Create and append the options
+	         for (var i = 0; i < arrValue.length; i++) {
+	             var option = document.createElement("option");
+	             option.value = arrValue[i].toLowerCase();
+	             option.text = arrValue[i];
+	             selectList.appendChild(option);
+	         }
+	         return searchDiv;
+	      }
+
+
+	      function getSuites() {
+	         return jsonData.testSuites;
+	      }
+
+	      function getTestCases(suite) {
+	         return suite.tsTestcases;
+	      }
+
+	      function getTestSteps(testCase) {
+	         return testCase.tcTeststeps;
+	      }
+
+	      function getAdditionalInfos(testCase) {
+	         return testCase.tcInformations;
+	      }
+
+	      function createTestCaseOverviewDiv(testCase) {
+
+	          var mainDiv = document.createElement('DIV');
+	          mainDiv.setAttribute('style','display: grid; grid-template-columns: 48% 48%; grid-gap: 10px; color: #444; margin: auto;');
+	         
+	          
+	         let lblName = 'Name';
+	         let lblDesc = 'Description';
+	         let lblModule = 'Module';
+	         let lblEnv = 'Environment';
+	         let lblHost = 'Host';
+	         let lblStartTime = 'Start time';
+	         let lblEndTime = 'End time';
+	         let lblStatus = 'Status';
+	         let lblPassed = 'Passed';
+	         let lblFailed = 'Failed';
+	         let lblWarning = 'Warning';
+	         let lblDoneInfo = 'Done/Info';
+	         let lblUnknown = 'Unknown';
+	         let lblTotal = 'Total';
+
+	         let propName = getPropObject(lblName, testCase.tcName);
+	         let propDesc = getPropObject(lblDesc, testCase.tcDesc);
+
+	         let propMod = getPropObject(lblModule, testCase.tcModule);
+	         let propEnv = getPropObject(lblEnv, testCase.tcEnv);
+	         let propHost = getPropObject(lblHost, testCase.host);
+	         let propSTM = getPropObject(lblStartTime, testCase.tcStarttime);
+	         let propETM = getPropObject(lblEndTime, testCase.tcEndtime);
+	         let propSts = getPropObject(lblStatus, testCase.tcStatus);
+
+	         let propPass = getPropObject(lblPassed, testCase.pass);
+	         let propFail = getPropObject(lblFailed, testCase.fail);
+	         let propWar = getPropObject(lblWarning, testCase.warning);
+	         let propDone = getPropObject(lblDoneInfo, testCase.done);
+	         let propUnk = getPropObject(lblUnknown, testCase.unknown);
+	         let propTot = getPropObject(lblTotal, testCase.total);
+
+	         var tcDetails = document.createElement('DIV');
+	         tcDetails.setAttribute('style','border: 2px outset #1C6EA4;padding-left: 20px;');
+	         tcDetails.appendChild(propName);
+	         tcDetails.appendChild(propDesc);
+	         tcDetails.appendChild(propMod);
+	         tcDetails.appendChild(propEnv);
+	         tcDetails.appendChild(propHost);
+	         tcDetails.appendChild(propSTM);
+	         tcDetails.appendChild(propETM);
+	         tcDetails.appendChild(propSts);
+
+	         var tcStepDetails = document.createElement('DIV');
+	         tcStepDetails.id = testCase.tcShortName;
+	         tcStepDetails.setAttribute('style', 'width: 100%;height: 100%;border-bottom: 2px outset #1C6EA4;padding: 10px;');
+	         
+	         mainDiv.appendChild(tcDetails);
+	         mainDiv.appendChild(tcStepDetails);
+	          
+	         return mainDiv;
+	      }
+	      function createTestSuiteOverviewDiv(testSuite) {
+
+	          var mainDiv = document.createElement('DIV');
+	          mainDiv.setAttribute('style','display: grid; grid-template-columns: 48% 48%; grid-gap: 10px; color: #444; margin: auto;');
+	         
+	          
+	         let lblName = 'Name';
+	         let lblStartTime = 'Start time';
+	         let lblEndTime = 'End time';
+	         let lblStatus = 'Status';
+
+	         let propName = getPropObject(lblName, testSuite.tsName);
+	         let propSTM = getPropObject(lblStartTime, testSuite.tsStarttime);
+	         let propETM = getPropObject(lblEndTime, testSuite.tsEndtime);
+	         let propSts = getPropObject(lblStatus, testSuite.tsStatus);
+
+	         var tsDetails = document.createElement('DIV');
+	         tsDetails.setAttribute('style','border: 2px outset #1C6EA4;padding-left: 20px;');
+	         tsDetails.appendChild(propName);
+	         tsDetails.appendChild(propSTM);
+	         tsDetails.appendChild(propETM);
+	         tsDetails.appendChild(propSts);
+
+	         var tsCaseDetails = document.createElement('DIV');
+	         tsCaseDetails.id = testSuite.tsName;
+	         tsCaseDetails.setAttribute('style', 'width: 100%;height: 100%;border-bottom: 2px outset #1C6EA4;padding: 10px;');
+	         
+	         mainDiv.appendChild(tsDetails);
+	         mainDiv.appendChild(tsCaseDetails);
+	          
+	         return mainDiv;
+	      }
+
+	      function getTableRowObject(tdData) {
+	         var tr = document.createElement('tr');
+	         if (tdData != undefined) {
+	             for (var i = 0; i < tdData.length; i++) {
+	                 var td = document.createElement('td');
+	                 td.setAttribute('style', 'padding-left:10px; padding-right:10px; width: 35%');
+	                 td.appendChild(tdData[i]);
+	                 tr.appendChild(td);
+	             }
+	         }
+	         return tr;
+	      }
+
+	      function getPropObject(propName, propValue) {
+	         let lblProps = document.createElement('P');
+	         let lblPropBold = document.createElement('B');
+	         let txtName = document.createTextNode(propName + ": ");
+	         let txtValue = document.createTextNode(propValue);
+
+	         lblPropBold.appendChild(txtName);
+	         lblProps.appendChild(lblPropBold);
+	         lblProps.appendChild(txtValue);
+
+	         return lblProps;
+	      }
+	      
+	      function getSpanForStatusCount(statusValue,statusCount){
+	          
+	      }
+
+	      function processFilterAll(tableID, value) {
+	         table = getTableObject(tableID);
+	         if (table != null) {
+	             if (value != null) {
+	                 value = value.toUpperCase();
+	                 tr = table.getElementsByTagName("tr");
+	                 for (i = 0; i < tr.length; i++) {
+	                     var currentRow = tr[i];
+	                     var currentTDArray = currentRow.getElementsByTagName("td");
+
+	                     for (var v = 0; v < currentTDArray.length; v++) {
+	                         var actualColumnvalue = currentTDArray[v].innerHTML.toUpperCase();
+	                         if (actualColumnvalue.indexOf(value) != -1) {
+	                             currentRow.style.display = "";
+	                             break;
+	                         } else {
+	                             currentRow.style.display = "none";
+	                         }
+	                     }
+	                 }
+	             }
+	         }
+	      }
+
+	      function processFilter(tableID, columnIDsArray, valuesArray) {
+	         table = getTableObject(tableID);
+	         if (table != null) {
+	             if (columnIDsArray != null && valuesArray != null) {
+	                 if (columnIDsArray.length == valuesArray.length) {
+	                     //tr = table.getElementsByTagName("tr");
+	                     tr = table.getElementsByClassName("teststeprow");
+	                     for (i = 0; i < tr.length; i++) {
+	                         var currentRow = tr[i];
+	                         var hitCount = 0;
+	                         for (var v = 0; v < columnIDsArray.length; v++) {
+	                             var currentColID = columnIDsArray[v];
+	                             var currentFilterValue = valuesArray[v].toUpperCase();
+	                             var actualColumnvalue = "n0-valuef0und";
+	                             try {
+	                                 //var actualColumnvalue = currentRow.getElementsByTagName("td")[currentColID].innerHTML.toUpperCase();
+	                                 var actualColumnvalue = currentRow.cells.item(currentColID).innerHTML.toUpperCase();
+	                             } catch (ex) {}
+	                             if (actualColumnvalue.indexOf(currentFilterValue) != -1) {
+	                                 hitCount++;
+	                             }
+	                         }
+	                         if (hitCount == columnIDsArray.length) {
+	                             currentRow.style.display = "";
+	                         } else {
+	                             currentRow.style.display = "none";
+	                         }
+
+	                     }
+	                 }
+	             }
+	         }
+	      }
+
+	      function displayAll(tableID) {
+	         table = getTableObject(tableID);
+	         if (table != null) {
+	             tr = table.getElementsByTagName("tr");
+	             for (i = 0; i < tr.length; i++) {
+	                 tr[i].style.display = "";
+	             }
+	         }
+	      }
+
+	      function searchResults(idValue, colID, isName, isSelect) {
+	         var curElement, curValue;
+	         if (isName) {
+	             curElement = document.getElementsByName(idValue);
+	         } else {
+	             curElement = document.getElementById(idValue);
+	         }
+	         if (isSelect) {
+	             curValue = getDropDownSelectedValue(curElement);
+	         } else if (colID) {
+	             curValue = curElement[0].value;
+	         } else {
+	             curValue = curElement.text;
+	         }
+	         if (colID === true) {
+	             processFilterAll(tableID, curValue);
+	         } else {
+	             processFilter(tableID, [colID], [curValue]);
+	         }
+	      }
+
+	      function getDropDownSelectedValue(dropDownObject) {
+	         return dropDownObject.options[dropDownObject.selectedIndex].text;
+	      }
+
+	      function getTableObject(strValue) {
+	         return document.getElementById(strValue);
+	      }
+	         
+	         
+
+	         
+	         //Project variable to HTMLtable converter
+	      function getTestStepsHTMLTable(arrTestSteps,suiteName,testCaseName) {
+	         var tblObj = document.createElement('TABLE');
+	         tblObj.setAttribute('id',tableID);
+	         tblObj.setAttribute('style','width: 98%');
+	         var htmlTable = "";
+	         var ctStrPass = "pass",
+	         ctStrFail = "fail",
+	         ctStrWarning = "warning",
+	         ctStrDone = "done",
+	         ctStrInfo = "info",
+	         ctStrUnknown = "unknown";
+
+	         if (arrTestSteps != undefined) {
+	             //Adding Test Steps columns
+	             htmlTable += createHTMLRow("teststepheader");
+	             htmlTable += addHTMLTableHeaderData("Step no");
+	             htmlTable += addHTMLTableHeaderData("Expected result");
+	             htmlTable += addHTMLTableHeaderData("Actual result");
+	             htmlTable += addHTMLTableHeaderData("Test step status");
+	             htmlTable += addHTMLTableHeaderData("Screen shot");
+	             htmlTable += endHTMLRow();
+
+	             //Adding rows to test steps
+	             for (var iR = 0; iR < arrTestSteps.length; iR++) {
+	                 var testStep = arrTestSteps[iR];
+	                 
+	                 var actual = testStep.actual;
+	                 var expected = testStep.expected == null ? "--na--" : testStep.expected;
+	                 var imgPath = testStep.imgPath;
+	                 var sts = testStep.status;
+	                 var isTitle = testStep.isTitile.toLowerCase() == 'true' ? true : false;
+	                 
+	                 htmlTable += createHTMLRow("teststeprow");
+	                 if (isTitle) {
+	                     htmlTable += addHTMLRowData(addHMTLP(actual, "caption"), "teststeptitle", 7);
+	                 } else {
+	                     htmlTable += addHTMLRowData(iR + 1, "sno");
+	                     htmlTable += addHTMLRowData(expected);
+	                     htmlTable += addHTMLRowData(actual);
+	                     var StatusValue = sts.toLowerCase();
+	                     if (StatusValue == ctStrFail) {
+	                         htmlTable += addHTMLRowData(sts, "fail");
+	                     } else if (StatusValue == ctStrWarning) {
+	                         htmlTable += addHTMLRowData(sts, "warning");
+	                     } else if (StatusValue == ctStrPass) {
+	                         htmlTable += addHTMLRowData(sts, "pass");
+	                     } else if (StatusValue == ctStrDone || StatusValue == ctStrInfo) {
+	                         htmlTable += addHTMLRowData(sts, "done");
+	                     } else {
+	                         htmlTable += addHTMLRowData(sts, "unknown");
+	                     }
+	                     
+
+	                     if (imgPath != null) {
+	                         htmlTable += addHTMLRowData(addHTMLPopupLink(suiteName + "/testcases/" +  testCaseName + "/" + imgPath, "View"));
+	                     } else {
+	                         htmlTable += addHTMLRowData("--na--");
+	                     }
+	                 }
+	                 htmlTable += endHTMLRow();
+	             }
+	         }
+	         tblObj.innerHTML =htmlTable;
+	         
+	         return tblObj;
+	      }
+
+
+	      //HTML Utilities
+	      function createHTMLTable(idValue) {
+	         return "<table id='" + idValue + "' style='width: 98%'>";
+	      }
+
+	      function endHTMLTable() {
+	         return "<\/table>";
+	      }
+	      //Starting code of theHTML row 
+	      function createHTMLRow(strClass) {
+	         if (strClass == undefined || strClass == "") {
+	             return "<tr>";
+	         } else {
+	             return "<tr class = '" + strClass + "'>";
+	         }
+	      }
+	      //Ending code of theHTML row
+	      function endHTMLRow() {
+	         return "<\/tr>";
+	      }
+
+	      function insertHTMLImage(filePath, altText) {
+	         return "<img src='" + filePath + "' alt='" + altText + "' style='width:270px;height:80px;'>";
+	      }
+	      //Inserting row data into HTML table
+	      function addHTMLRowData(strHTMLRowData, classValue, colCount) {
+	         strHTMLRowData = (strHTMLRowData == "") ? "-" : strHTMLRowData;
+	         if (classValue == undefined || classValue == "") {
+	             return "<td class = 'default'>" + strHTMLRowData + "<\/td>";
+	         } else if (classValue == "teststeptitle") {
+	             return "<td class = '" + classValue + "' colspan='" + colCount + "'>" + strHTMLRowData + "<\/td>";
+	         } else {
+	             return "<td class = '" + classValue + "'>" + strHTMLRowData + "<\/td>";
+	         }
+	      }
+
+	      function addHTMLTableHeaderData(headerValue) {
+	         return "<th>" + headerValue + "<\/th>";
+	      }
+
+	      function addHTMLPopupLink(HyperLink, LinkText) {
+	         return "<a href='" + HyperLink + "' target='_blank' onclick='window.open('" + HyperLink + "', 'popup'); return false;'>" + LinkText + "<\/a>";
+	      }
+
+	      function addHMTLP(StringValue, ClassName) {
+	         StringValue = (StringValue == "") ? "-" : StringValue;
+	         if (ClassName == undefined || ClassName == "") {
+	             return "<p>" + StringValue + "<\/p>";
+	         } else {
+	             return "<p class = '" + ClassName + "'>" + StringValue + "<\/p>";
+	         }
+	      }
+
+	      function addHTMLOption(name, value) {
+	         return "<option value='" + name + "'>" + value + "<\/option>";
+	      }
+
+	      function addHTMLOptionsforSelect(arrayofValues, noNeedEmptyValue) {
+	         var htmlText = "";
+
+	         if (noNeedEmptyValue) {
+
+	         } else {
+	             htmlText += addHTMLOption("empty", "");
+	         }
+	         if (arrayofValues != null) {
+	             for (var av = 0; av < arrayofValues.length; av++) {
+	                 var currentvalue = arrayofValues[av];
+	                 var name = aqString.Replace(currentvalue, " ", "_", true);
+	                 htmlText += addHTMLOption(name, currentvalue);
+	             }
+	         }
+	         return htmlText;
+	      }
+
+	      function addHTMLSpan(tooltipText) {
+	         return "<span class='tooltiptext'>" + tooltipText + "<\/span>";
+	      }
+
+	      function addDivforTooltip(mainText, TooltipText) {
+	         TooltipText = aqConvert.VarToStr(TooltipText);
+	         if (TooltipText == "") {
+	             TooltipText = mainText;
+	         }
+	         return "<div class='tooltip'>" + mainText + " " + addHTMLSpan(TooltipText) + " <\/div>";
+	      }
+
+	      function getLIItemWithExpendCollapse(id) {
+	         return "<input type='checkbox' checked='checked' id='" + id + "' />";
+	      }
+	      function  getLILabel(forID, label,customProp) {
+	          if(label != undefined){
+	              if(label.split("-").length == 2){
+	                  let module = label.split("-")[0];
+	                  let browser = label.split("-")[1];
+	                  label = module + " : <img src='support-files/"  + browser + ".png'<\/img> " + browser;
+	              }
+	          }
+	         return  "<label class='tree_label' for='" + forID + "' " + customProp + ">" + label + "<\/label>";
+	      }
+	      function getLIItem(customProp, label,status) {
+	         return "<li><span class='tree_label'" + customProp + " ><img style='width: 16px; height: 16px;' src='support-files/"  + status + ".png'<\/img> " + label + "<\/span><\/li>";
+	      }
+	      function openUL() {
+	         return "<ul>";
+	      }
+	      function closeUL() {
+	         return "<\/ul>";
+	      }
+	      function openLI() {
+	         return "<li>";
+	      }
+	      function closeLI() {
+	         return "<\/li>";
+	      }
+
+	      function getStatusDataTableForChart(dataArr){
+	         var data = new google.visualization.DataTable();
+	            data.addColumn('string', 'Status');
+	            data.addColumn('number', 'TC count');
+	            data.addRows([
+	              ['Pass', dataArr[0]],
+	              ['Fail', dataArr[1]],
+	              ['Warning', dataArr[2]], 
+	              ['Done/Info', dataArr[3]],
+	              ['Others', dataArr[4]]
+	            ]);
+	            return data;
+	        }
+	       function getStatusPieChartOptions(titleValue){
+	              var options = {
+	            title: titleValue,
+	            colors:['green','red','orange','#67B8FF','#D7D7D7'],
+	            legend: {position:'bottom'}
+
+	          };
+	          return options;
+	       }
+	       function drawStatusGoogleChart(data,title,chartID){
+	          var options = getStatusPieChartOptions(title);
+	          var chart = new google.visualization.PieChart(document.getElementById(chartID));
+	          chart.draw(data, options);
+	       }
+	         
+	         
+	</script>
+</body>
+</html>

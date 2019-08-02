@@ -1,0 +1,8 @@
+﻿sample,tcid,alertData,currentEventData,pinUnpinEventData,,columnsToVerify
+sample,events-alert_summary,"Critical=4
+Major=0
+Warning=6
+Good=17
+N/A=31","Expressway-E=Disk usage is greater than 90%
+Expressway-C=Disk usage is greater than 90%",Expressway-E=Disk usage is greater than 90%,,
+sample,events-columnsdetails-historicevents,,"Nectar SfB-Certificates=Unable to obtain certificate details,Critical",,,ALERT LEVEL|COMPONENT NAME|EVENT DESCRIPTION|LAST OCCURRENCE|FIRST OCCURRENCE|EVENT ID

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="login-chrome" duration-ms="39872" started-at="2019-08-02T12:32:37Z" finished-at="2019-08-02T12:33:17Z">
+    <groups>
+    </groups>
+    <test name="login validation-successful login" duration-ms="39872" started-at="2019-08-02T12:32:37Z" finished-at="2019-08-02T12:33:17Z">
+      <class name="com.nectar.ambrosia.tests.LoginScreen">
+        <test-method status="PASS" signature="beforeTest(java.lang.String, org.testng.ITestContext)[pri:0, instance:com.nectar.ambrosia.tests.LoginScreen@5599e926]" name="beforeTest" is-config="true" duration-ms="5105" started-at="2019-08-02T18:02:37Z" finished-at="2019-08-02T18:02:42Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[org.testng.TestRunner@cbea2e6]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method status="PASS" signature="preparePageObjects()[pri:0, instance:com.nectar.ambrosia.tests.LoginScreen@5599e926]" name="preparePageObjects" duration-ms="19" started-at="2019-08-02T18:02:42Z" finished-at="2019-08-02T18:02:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preparePageObjects -->
+        <test-method status="PASS" signature="loginIntoApplication()[pri:1, instance:com.nectar.ambrosia.tests.LoginScreen@5599e926]" name="loginIntoApplication" duration-ms="34733" started-at="2019-08-02T18:02:42Z" finished-at="2019-08-02T18:03:17Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginIntoApplication -->
+        <test-method status="PASS" signature="afterTest(org.testng.ITestContext)[pri:0, instance:com.nectar.ambrosia.tests.LoginScreen@5599e926]" name="afterTest" is-config="true" duration-ms="0" started-at="2019-08-02T18:03:17Z" finished-at="2019-08-02T18:03:17Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@cbea2e6]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+      </class> <!-- com.nectar.ambrosia.tests.LoginScreen -->
+    </test> <!-- login validation-successful login -->
+  </suite> <!-- login-chrome -->
+</testng-results>

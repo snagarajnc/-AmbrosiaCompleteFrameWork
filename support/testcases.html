@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Automation report</title>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<style>
+	      * {
+	       box-sizing: border-box;
+	      }
+
+	      body {
+	       font-family: Arial, Helvetica, sans-serif;
+	       font-size: 14px;
+	      }
+
+	      /* Style the header */
+	      header {
+	       background-color: #836590;
+	       padding: 0.5px;
+	       text-align: center;
+	       font-size: 22px;
+	       color: white;
+	      }
+
+	      /* Create two columns/boxes that floats next to each other */
+	      nav {
+	       float: left;
+	       width: 20%;
+	       height: auto;
+	       background: white;
+	       padding: 20px;
+	       border-right: 2px solid black;
+	       overflow: hidden;
+	      }
+
+	      /* Style the list inside the menu */
+	      nav ul {
+	       list-style-type: none;
+	       padding: 0;
+	      }
+
+	      article {
+	       float: left;
+	       padding: 20px;
+	       width: 100%;
+	       background-color: white;
+	       border-left: 1px solid black;
+	       height: auto;
+	       overflow: hidden;
+	      }
+
+	      /* Clear floats after the columns */
+	      section:after {
+	       content: "";
+	       display: table;
+	       clear: both;
+	      }
+	      #fontSizeWrapper { font-size: 16px; }
+
+	      #fontSize {
+	       width: 100px;
+	       font-size: 1em;
+	       }
+
+	      /* ————————————————————–
+	       Tree core styles
+	      */
+	      .tree { margin: 1em; }
+
+	      .tree input {
+	       position: absolute;
+	       clip: rect(0, 0, 0, 0);
+	       }
+
+	      .tree input ~ ul { display: none; }
+
+	      .tree input:checked ~ ul { display: block; }
+
+	      /* ————————————————————–
+	       Tree rows
+	      */
+	      .tree li {
+	       line-height: 1.2;
+	       position: relative;
+	       padding: 0 0 1em 1em;
+	       }
+
+	      .tree ul li { padding: 1em 0 0 1em; }
+
+	      .tree > li:last-child { padding-bottom: 0; }
+
+	      /* ————————————————————–
+	       Tree labels
+	      */
+	      .tree_label {
+	       position: relative;
+	       display: inline-block;
+	       background: #fff;
+	       }
+
+	      label.tree_label { cursor: pointer; }
+
+	      label.tree_label:hover { color: #666; }
+
+	      /* ————————————————————–
+	       Tree expanded icon
+	      */
+	      label.tree_label:before {
+	       background: #000;
+	       color: #fff;
+	       position: relative;
+	       z-index: 1;
+	       float: left;
+	       margin: 0 1em 0 -2em;
+	       width: 1em;
+	       height: 1em;
+	       border-radius: 1em;
+	       content: '+';
+	       text-align: center;
+	       line-height: .9em;
+	       }
+
+	      :checked ~ label.tree_label:before { content: '–'; }
+
+	      /* ————————————————————–
+	       Tree branches
+	      */
+	      .tree li:before {
+	       position: absolute;
+	       top: 0;
+	       bottom: 0;
+	       left: -.5em;
+	       display: block;
+	       width: 0;
+	       border-left: 1px solid #777;
+	       content: "";
+	       }
+
+	      .tree_label:after {
+	       position: absolute;
+	       top: 0;
+	       left: -1.5em;
+	       display: block;
+	       height: 0.5em;
+	       width: 1em;
+	       border-bottom: 1px solid #777;
+	       border-left: 1px solid #777;
+	       border-radius: 0 0 0 .3em;
+	       content: '';
+	       }
+
+	      label.tree_label:after { border-bottom: 0; }
+
+	      :checked ~ label.tree_label:after {
+	       border-radius: 0 .3em 0 0;
+	       border-top: 1px solid #777;
+	       border-right: 1px solid #777;
+	       border-bottom: 0;
+	       border-left: 0;
+	       bottom: 0;
+	       top: 0.5em;
+	       height: auto;
+	       }
+
+	      .tree li:last-child:before {
+	       height: 1em;
+	       bottom: auto;
+	       }
+
+	      .tree > li:last-child:before { display: none; }
+
+	      .tree_custom {
+	       display: block;
+	       background: #eee;
+	       padding: 1em;
+	       border-radius: 0.3em;
+	      }
+	      /* Style the footer */
+	      footer {
+	       bottom: 0;
+	       left: 0;
+	       height: 30px;
+	       background-color: #671E75;
+	       width: 100%;
+	       padding: 1.5px;
+	       overflow: hidden;
+	       position: fixed;
+	       width: 100%;
+	       color: white;
+	      }
+	      .left{
+	         float: left;
+	      }
+	      #teststeps table {
+	         width: 100%;
+	         overflow: auto;
+	      }
+	      #teststeps th {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	      }
+	      td.sno {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         width: 30px;
+	         background-color: White;
+	      }
+	      td.fail {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: Red;
+	      }
+	      td.pass {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: GREEN;
+	      }
+	      td.warning {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: ORANGE;
+	      }
+	      td.done {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: #BDCFFF;
+	      }
+	      td.unknown {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: #727272;
+	      }
+	      td.default {
+	         border: 1px solid #ddd;
+	         padding: 8px;
+	         background-color: White;
+	         overflow: auto;
+	         max-width: 275px;
+	      }
+	      td.teststeptitle{
+	         border: 1px solid #ddd;
+	         padding: 3px 3px 3px 3px;
+	         background-color: #69e;
+	         overflow: auto;
+	         font-size: 16px;
+	         font-weight: bold;
+	         color: white;
+	      }
+	      #teststeps tr:hover {
+	         background-color: Grey;
+	      }
+	      #teststeps th {
+	         padding-top: 12px;
+	         padding-bottom: 12px;
+	         text-align: center;
+	         background: #4CAF50;
+	         color: white;
+	      }
+	      .searchForm {
+	         border-radius: 5px;
+	         overflow: auto;
+	         width:50%;
+	         
+	      }
+	      input[type=text], select {
+	         width: auto;
+	         padding: 2px;
+	         margin: 8px 0;
+	         display: inline-block;
+	         border: 1px solid #ccc;
+	         border-radius: 4px;
+	         box-sizing: border-box;
+	      }
+	      span.pass {
+	        background: green;
+	         border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: white;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      span.fail {
+	        background: red;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: white;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      span.warning {
+	        background: orange;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: black;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      span.done {
+	        background: #67B8FF;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: black;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      span.info {
+	        background: #C7E3FB;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: black;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+	      span.unknown {
+	        background: #D7D7D7;
+	        border-radius: 0.8em;
+	        -moz-border-radius: 0.8em;
+	        -webkit-border-radius: 0.8em;
+	        color: black;
+	        display: inline-block;
+	        font-weight: bold;
+	        line-height: 1.6em;
+	        margin-right: 15px;
+	        text-align: center;
+	        width: 1.6em; 
+	      }
+
+	      /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+	      @media (max-width: 600px) {
+	       nav, article {
+	         width: 100%;
+	         height: auto;
+	       }
+	      }
+	</style>
+</head>
+<body>
+	<header>
+		<img class='left' src='support-files/logo.png'>
+		<p>Test Summary report<br>
+		Nectar Automation</p>
+	</header>
+	<section>
+		<article>Test</article>
+		
+	</section>
+	<footer>
+		This is an autogenerated report.
+	</footer>
+	<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+	</script> 
+	<script>
+	        
+	</script>
+</body>
+</html>

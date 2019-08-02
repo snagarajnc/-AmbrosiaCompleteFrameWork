@@ -1,0 +1,7 @@
+﻿sample,tcid,timeout,isforgotpassword,iserrorvalidation,url,username,password,recoveryemailid,errormessage,alertmessage
+sample,login error validation-empty fields,,no,yes,https://ambrosia.lab.nectarvoip.com,null,null,,Your login or password was incorrect. Please try again.,
+sample,login error validation-username-empty,,no,yes,https://ambrosia.lab.nectarvoip.com,null,test,,Your login or password was incorrect. Please try again.,
+sample,login error validation-password-empty,,no,yes,https://ambrosia.lab.nectarvoip.com,test,null,,Your login or password was incorrect. Please try again.,
+sample,login error validation-invalid credentials,,no,yes,https://ambrosia.lab.nectarvoip.com,test,test,,Your login or password was incorrect. Please try again.,
+sample,login validation-successful login,,no,no,https://ambrosia.lab.nectarvoip.com,sramasamy@client1.com,Sramasamy1*,,,
+sample,login Validation-Forgot Password-Reset Alert,10,yes,no,https://staging.ambrosia.lab.nectarvoip.com/dashboardui/signin,kpattabi@client1.com,null,kpattabi@nectarcorp.com,,To reset your password please check your email box and follow instructions.

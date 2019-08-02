@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="test01:firefox">
+  <test name="tc-001">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-001 -->
+  <test name="tc-002">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-002 -->
+  <test name="tc-003">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-003 -->
+  <test name="tc-004">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-004 -->
+  <test name="tc-005">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-005 -->
+  <test name="tc-006">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-006 -->
+  <test name="tc-007">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-007 -->
+  <test name="tc-008">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-008 -->
+  <test name="tc-009">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-009 -->
+  <test name="tc-010">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-010 -->
+  <test name="tc-011">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-011 -->
+  <test name="tc-012">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-012 -->
+  <test name="tc-013">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-013 -->
+  <test name="tc-014">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-014 -->
+  <test name="tc-015">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.nectar.ambrosia.businesscomponents.LoginScreen"/>
+    </classes>
+  </test> <!-- tc-015 -->
+</suite> <!-- test01:firefox -->
